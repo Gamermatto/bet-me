@@ -5,7 +5,7 @@
     "type": "DEPLOYMENT_STRATEGY_TYPE_ROLLING"
   },
   "dependencies": {
-  "ws": "^8.0.0"
+    "ws": "^8.18.3"
   },
   "routes": [
     {
@@ -80,4 +80,3 @@
     }
   }
 }
-
