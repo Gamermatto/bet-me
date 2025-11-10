@@ -1,7 +1,9 @@
-import WebSocket, { WebSocketServer } from 'ws';
+import { WebSocketServer } from 'ws';
 
 const PORT = process.env.PORT || 3000;
-const wss = new WebSocketServer({ port: PORT });
+const HOST = "0.0.0.0";
+
+const wss = new WebSocketServer({ port: PORT, host: HOST });
 
 let lobbies = [
   { id: "lobby1", name: "Lobby Uno", player_count: 2 },
@@ -24,7 +26,9 @@ wss.on('connection', (ws) => {
     }
   });
 
-  ws.on('close', () => console.log('Client disconnesso'));
+  ws.on('close', () => {
+    console.log('Client disconnesso');
+  });
 });
 
-console.log(`Server WebSocket attivo su porta ${PORT}`);
+console.log(`Server WebSocket attivo su ${HOST}:${PORT}`);
