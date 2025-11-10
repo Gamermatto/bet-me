@@ -4,6 +4,9 @@
   "strategy": {
     "type": "DEPLOYMENT_STRATEGY_TYPE_ROLLING"
   },
+  "dependencies": {
+  "ws": "^8.0.0"
+  },
   "routes": [
     {
       "port": 8000,
