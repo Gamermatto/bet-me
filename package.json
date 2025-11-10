@@ -1,6 +1,7 @@
 {
   "name": "bet-me",
-  "type": "WEB",
+  "type": "module",
+
   "strategy": {
     "type": "DEPLOYMENT_STRATEGY_TYPE_ROLLING"
   },
