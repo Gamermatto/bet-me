@@ -1,83 +1,12 @@
 {
-  "name": "bet-me",
+  "name": "bet‑me",
+  "version": "1.0.0",
   "type": "module",
-
-  "strategy": {
-    "type": "DEPLOYMENT_STRATEGY_TYPE_ROLLING"
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
   },
   "dependencies": {
     "ws": "^8.18.3"
-  },
-  "routes": [
-    {
-      "port": 8000,
-      "path": "/"
-    }
-  ],
-  "ports": [
-    {
-      "port": 8000,
-      "protocol": "http"
-    }
-  ],
-  "proxy_ports": [],
-  "env": [],
-  "regions": [
-    "fra"
-  ],
-  "scalings": [
-    {
-      "scopes": [
-        "region:fra"
-      ],
-      "min": 0,
-      "max": 1,
-      "targets": [
-        {
-          "sleep_idle_delay": {
-            "value": 0,
-            "deep_sleep_value": 300,
-            "light_sleep_value": 0
-          }
-        }
-      ]
-    }
-  ],
-  "instance_types": [
-    {
-      "scopes": [
-        "region:fra"
-      ],
-      "type": "free"
-    }
-  ],
-  "health_checks": [
-    {
-      "grace_period": 5,
-      "interval": 30,
-      "restart_limit": 3,
-      "timeout": 5,
-      "tcp": {
-        "port": 8000
-      }
-    }
-  ],
-  "volumes": [],
-  "config_files": [],
-  "skip_cache": false,
-  "git": {
-    "repository": "github.com/Gamermatto/bet-me",
-    "branch": "main",
-    "tag": "",
-    "sha": "",
-    "build_command": "",
-    "run_command": "",
-    "no_deploy_on_push": false,
-    "workdir": "",
-    "buildpack": {
-      "build_command": "",
-      "run_command": "",
-      "privileged": false
-    }
   }
 }
