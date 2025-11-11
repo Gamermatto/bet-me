@@ -1,21 +1,21 @@
-import { WebSocketServer } from 'ws';
+import WebSocket, { WebSocketServer } from "ws";
 
-const PORT = process.env.PORT || 3000;
-const HOST = "0.0.0.0";
-
-const wss = new WebSocketServer({ port: PORT, host: HOST });
+const PORT = process.env.PORT || 10000;
+const wss = new WebSocketServer({ port: PORT });
+console.log(`Server WebSocket attivo su 0.0.0.0:${PORT}`);
 
 let lobbies = [
   { id: "lobby1", name: "Lobby Uno", player_count: 2 },
   { id: "lobby2", name: "Lobby Due", player_count: 4 },
 ];
 
-wss.on('connection', (ws) => {
-  console.log('Nuovo client connesso');
+wss.on("connection", (ws) => {
+  console.log("Nuovo client connesso");
 
-  ws.on('message', (msg) => {
+  ws.on("message", (msg) => {
     try {
       const data = JSON.parse(msg);
+
       if (data.type === "get_lobbies") {
         ws.send(JSON.stringify({ type: "lobby_list", lobbies }));
       } else if (data.type === "join_lobby") {
@@ -26,9 +26,5 @@ wss.on('connection', (ws) => {
     }
   });
 
-  ws.on('close', () => {
-    console.log('Client disconnesso');
-  });
+  ws.on("close", () => console.log("Client disconnesso"));
 });
-
-console.log(`Server WebSocket attivo su ${HOST}:${PORT}`);
