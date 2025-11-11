@@ -33,6 +33,7 @@ wss.on('connection', (ws) => {
       const data = JSON.parse(msg);
 
       switch (data.type) {
+
         case "get_lobbies":
           send(ws, {
             type: "lobby_list",
@@ -82,24 +83,33 @@ wss.on('connection', (ws) => {
           broadcastLobbies();
           break;
 
+        case "delete_lobby":
+          if (data.lobby_id) {
+            // elimina lobby specifica
+            const index = lobbies.findIndex(l => l.id === data.lobby_id);
+            if (index === -1) {
+              send(ws, { type: "error", message: "Lobby non trovata" });
+              return;
+            }
+            const removedLobby = lobbies.splice(index, 1)[0];
+            console.log(`🗑️ Lobby eliminata: ${removedLobby.name}`);
+            send(ws, { type: "lobby_deleted", lobby_id: removedLobby.id });
+          } else {
+            // elimina tutte le lobby
+            lobbies = [];
+            console.log("🗑️ Tutte le lobby sono state eliminate");
+            send(ws, { type: "lobbies_cleared" });
+          }
+          broadcastLobbies();
+          break;
+
         default:
           send(ws, { type: "error", message: "Tipo messaggio sconosciuto" });
       }
+
     } catch (err) {
       console.error("❌ Errore parsing messaggio:", err);
     }
-    case "delete_lobby":
-    const index = lobbies.findIndex(l => l.id === data.lobby_id);
-    if (index === -1) {
-      send(ws, { type: "error", message: "Lobby non trovata" });
-      return;
-    }
-  
-    const removedLobby = lobbies.splice(index, 1)[0];
-    console.log(`🗑️ Lobby eliminata: ${removedLobby.name}`);
-    broadcastLobbies();
-    send(ws, { type: "lobby_deleted", lobby_id: removedLobby.id });
-    break;
   });
 
   ws.on('close', () => console.log('🔴 Client disconnesso'));
