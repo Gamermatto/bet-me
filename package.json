@@ -1,5 +1,5 @@
 {
-  "name": "bet‑me",
+  "name": "betme",
   "version": "1.0.0",
   "type": "module",
   "main": "server.js",
