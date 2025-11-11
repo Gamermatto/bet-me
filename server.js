@@ -88,6 +88,18 @@ wss.on('connection', (ws) => {
     } catch (err) {
       console.error("❌ Errore parsing messaggio:", err);
     }
+    case "delete_lobby":
+    const index = lobbies.findIndex(l => l.id === data.lobby_id);
+    if (index === -1) {
+      send(ws, { type: "error", message: "Lobby non trovata" });
+      return;
+    }
+  
+    const removedLobby = lobbies.splice(index, 1)[0];
+    console.log(`🗑️ Lobby eliminata: ${removedLobby.name}`);
+    broadcastLobbies();
+    send(ws, { type: "lobby_deleted", lobby_id: removedLobby.id });
+    break;
   });
 
   ws.on('close', () => console.log('🔴 Client disconnesso'));
