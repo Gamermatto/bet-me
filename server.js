@@ -107,6 +107,11 @@ wss.on('connection', (ws) => {
                     broadcastChat(data.lobby_id, data.player_name, data.message);
                     break;
 
+                case "chat_message":
+                    console.log(`💬 [${data.player_name}] ${data.message}`);
+                    broadcastChat(data.lobby_id, data.player_name, data.message);
+                    break;
+                    
                 case "delete_lobby":
                     if (data.lobby_id) {
                         const idx = lobbies.findIndex(l => l.id === data.lobby_id);
